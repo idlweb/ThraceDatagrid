@@ -1,0 +1,148 @@
+Symfony
+ Search on Symfony website    OK
+Exception detected! 
+Warning: Missing argument 1 for Thrace\DataGridBundle\DataGrid\DataGrid::__construct(), called in C:\xampp\htdocs\_BDT\app\cache\dev\appDevDebugProjectContainer.php on line 437 and defined in C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php line 231
+500 Internal Server Error - ContextErrorException
+
+Stack Trace
+in C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php at line 231   -
+     *  
+     * @param string $name 
+     */ 
+    public function __construct($name) 
+    { 
+        $this->name = (string) $name; 
+    } 
+at ErrorHandler ->handle ('2', 'Missing argument 1 for Thrace\DataGridBundle\DataGrid\DataGrid::__construct(), called in C:\xampp\htdocs\_BDT\app\cache\dev\appDevDebugProjectContainer.php on line 437 and defined', 'C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php', '231', array()) 
+in C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php at line 231   -
+     *  
+     * @param string $name 
+     */ 
+    public function __construct($name) 
+    { 
+        $this->name = (string) $name; 
+    } 
+at DataGrid ->__construct () 
+in C:\xampp\htdocs\_BDT\app\cache\dev\appDevDebugProjectContainer.php at line 437   -
+     */ 
+    protected function getApp_Datagrid_VolontarioManagementService() 
+    { 
+        return $this->services['app.datagrid.volontario_management'] = new \Thrace\DataGridBundle\DataGrid\DataGrid();
+    }
+ 
+    /** 
+at appDevDebugProjectContainer ->getApp_Datagrid_VolontarioManagementService () 
+in C:\xampp\htdocs\_BDT\app\bootstrap.php.cache at line 1946   -
+}
+$this->loading[$id] = true;
+try {
+$service = $this->$method();
+} catch (\Exception $e) {
+unset($this->loading[$id]);
+if (array_key_exists($id, $this->services)) {
+at Container ->get ('app.datagrid.volontario_management') 
+in C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\Provider\DataGridProvider.php at line 56  + 
+at DataGridProvider ->get ('volontario_management') 
+in C:\xampp\htdocs\_BDT\src\idl\GestbdtBundle\Controller\OfferteController.php at line 78   -
+    {
+        $entity = new Offerte();
+        $form = $this->createForm(new OfferteType(), $entity);        
+        $volontarioManagementDataGrid = $this->container->get('thrace_data_grid.provider')->get('volontario_management');
+        return $this->render('idlGestbdtBundle:Offerte:new.html.twig', array(
+            'entity' => $entity,
+            'volontarioManagementDataGrid' => $volontarioManagementDataGrid,
+at OfferteController ->newAction () 
+at call_user_func_array (array(object(OfferteController), 'newAction'), array()) 
+in C:\xampp\htdocs\_BDT\app\bootstrap.php.cache at line 2815   -
+$this->dispatcher->dispatch(KernelEvents::CONTROLLER, $event);
+$controller = $event->getController();
+$arguments = $this->resolver->getArguments($request, $controller);
+$response = call_user_func_array($controller, $arguments);
+if (!$response instanceof Response) {
+$event = new GetResponseForControllerResultEvent($this, $request, $type, $response);
+$this->dispatcher->dispatch(KernelEvents::VIEW, $event);
+at HttpKernel ->handleRaw (object(Request), '1') 
+in C:\xampp\htdocs\_BDT\app\bootstrap.php.cache at line 2789   -
+public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+{
+try {
+return $this->handleRaw($request, $type);
+} catch (\Exception $e) {
+if (false === $catch) {
+throw $e;
+at HttpKernel ->handle (object(Request), '1', true) 
+in C:\xampp\htdocs\_BDT\app\bootstrap.php.cache at line 2918   -
+$this->container->enterScope('request');
+$this->container->set('request', $request,'request');
+try {
+$response = parent::handle($request, $type, $catch);
+} catch (\Exception $e) {
+$this->container->set('request', null,'request');
+$this->container->leaveScope('request');
+at ContainerAwareHttpKernel ->handle (object(Request), '1', true) 
+in C:\xampp\htdocs\_BDT\app\bootstrap.php.cache at line 2220   -
+if (false === $this->booted) {
+$this->boot();
+}
+return $this->getHttpKernel()->handle($request, $type, $catch);
+}
+protected function getHttpKernel()
+{
+at Kernel ->handle (object(Request)) 
+in C:\xampp\htdocs\_BDT\web\app_dev.php at line 28   -
+$kernel = new AppKernel('dev', true);
+$kernel->loadClassCache();
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);
+ 
+Logs   - 1 error
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Bundle\FrameworkBundle\EventListener\SessionListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\FragmentListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelRequest". 
+INFO - Matched route "form_offerte_new" (parameters: "_controller": "idl\GestbdtBundle\Controller\OfferteController::newAction", "_route": "form_offerte_new") 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\LocaleListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\Security\Http\Firewall::onKernelRequest". 
+DEBUG - Read SecurityContext from the session 
+DEBUG - Reloading user from user provider. 
+DEBUG - Username "antonio vangi" was reloaded from user provider. 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Bundle\AsseticBundle\EventListener\RequestListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ErrorsLoggerListener::injectLogger". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ErrorsLoggerListener::injectLogger". 
+DEBUG - Notified event "kernel.controller" to listener "Symfony\Bundle\FrameworkBundle\DataCollector\RouterDataCollector::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Acme\DemoBundle\EventListener\ControllerListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Symfony\Component\HttpKernel\DataCollector\RequestDataCollector::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener::onKernelController". 
+DEBUG - Notified event "kernel.exception" to listener "Symfony\Component\Security\Http\Firewall\ExceptionListener::onKernelException". 
+DEBUG - Notified event "kernel.exception" to listener "Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelException". 
+DEBUG - Notified event "kernel.exception" to listener "Symfony\Component\HttpKernel\EventListener\ExceptionListener::onKernelException". 
+CRITICAL - Uncaught PHP Exception Symfony\Component\Debug\Exception\ContextErrorException: "Warning: Missing argument 1 for Thrace\DataGridBundle\DataGrid\DataGrid::__construct(), called in C:\xampp\htdocs\_BDT\app\cache\dev\appDevDebugProjectContainer.php on line 437 and defined in C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php line 231" at C:\xampp\htdocs\_BDT\vendor\thrace\datagrid-bundle\Thrace\DataGridBundle\DataGrid\DataGrid.php line 231 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Bundle\FrameworkBundle\EventListener\SessionListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\FragmentListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\LocaleListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\Security\Http\Firewall::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Bundle\AsseticBundle\EventListener\RequestListener::onKernelRequest". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ErrorsLoggerListener::injectLogger". 
+DEBUG - Notified event "kernel.request" to listener "Symfony\Component\HttpKernel\EventListener\ErrorsLoggerListener::injectLogger". 
+DEBUG - Notified event "kernel.controller" to listener "Symfony\Bundle\FrameworkBundle\DataCollector\RouterDataCollector::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Acme\DemoBundle\EventListener\ControllerListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Symfony\Component\HttpKernel\DataCollector\RequestDataCollector::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener::onKernelController". 
+DEBUG - Notified event "kernel.controller" to listener "Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener::onKernelController". 
+Stack Trace (Plain Text)   +
+Symfony 2.3.5-DEV
+PHP
+Environment 399e61
+Request 500 OfferteController newAction
+Logs 1
+Time 2725 ms
+Memory Usage 23.0 MB
+Security  antonio vangi
+Database 0

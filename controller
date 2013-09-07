@@ -1,0 +1,86 @@
+<?php
+
+namespace idl\GestbdtBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\View\TwitterBootstrapView;
+
+use idl\GestbdtBundle\Entity\Offerte;
+use idl\GestbdtBundle\Form\OfferteType;
+
+/**
+ * Volontario controller.
+ *
+ */
+class OfferteController extends Controller
+{
+    /**
+     * Lists all Volontario entities.
+     *
+     */
+    public function inserisciAction()
+    {
+        //mantenuto per ricordare il metodo LIST -> permette di assegnare ad ogni colonna di un array ad un singolo array
+        //credo che assegni anche un array di array	
+        /**
+        list($filterForm, $queryBuilder) = $this->filter();
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+		// il passaggio dei dati comprende l'iteratore evoluto della tabella, i dati già impaginati ed i dati del filtro
+        return $this->render('idlGestbdtBundle:Volontario:index.html.twig', array(
+            'entities' => $entities,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView(),
+        ));
+		**/
+    }
+
+   
+
+    /**
+     * Creates a new Volontario entity.
+     * questa azione dovrebbe essere l'azione del post
+	 * il newAction dovrebbe essere quella del get
+     */
+    public function createAction(Request $request)
+    {
+    	// questa azione non visualizza nulla, reindirizza ad un'altra pagina
+        $entity  = new Offerte();
+        $form = $this->createForm(new OfferteType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            return $this->redirect($this->generateUrl('idl_privacy'));
+        }
+		//ritorna all'inserimento se non è riuscito
+        return $this->render('idlGestbdtBundle:Offerte:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Volontario entity.
+     *
+     */
+    public function newAction()
+    {
+        $entity = new Offerte();
+        $form = $this->createForm(new OfferteType(), $entity);		
+        $volontarioManagementDataGrid = $this->container->get('thrace_data_grid.provider')->get('volontario_management');
+        return $this->render('idlGestbdtBundle:Offerte:new.html.twig', array(
+            'entity' => $entity,
+            'volontarioManagementDataGrid' => $volontarioManagementDataGrid,
+            'form'   => $form->createView(),
+        ));
+    }
+
+}

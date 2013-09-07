@@ -1,0 +1,85 @@
+<?php
+namespace GestbdtBundle\DataGrid;
+
+use Doctrine\ORM\EntityManager;
+
+use Symfony\Component\Routing\RouterInterface;
+
+use Symfony\Component\Translation\TranslatorInterface;
+
+use Thrace\DataGridBundle\DataGrid\DataGridFactoryInterface;
+
+class VolontarioManagementBuilder
+{
+
+    const IDENTIFIER = 'volontario_management';
+
+    protected $factory;
+
+    protected $translator;
+
+    protected $router;
+
+    protected $em;
+
+
+    public function __construct (DataGridFactoryInterface $factory, TranslatorInterface $translator, RouterInterface $router, EntityManager $em)
+    {
+        $this->factory = $factory;
+        $this->translator = $translator;
+        $this->router = $router;
+        $this->em = $em;
+    }
+
+    public function build ()
+    {
+
+        $dataGrid = $this->factory->createDataGrid(self::IDENTIFIER);
+        $dataGrid
+            ->setCaption($this->translator->trans('volontario_management_datagrid.caption'))
+            ->setColNames(array(
+                $this->translator->trans('column.idUtente'), 
+                $this->translator->trans('column.idPrestazione'), 
+                $this->translator->trans('column.oreOfferte'), 
+                $this->translator->trans('column.descrizionePrestazione'), 
+            ))
+            ->setColModel(array(
+                array(
+                    'name' => 'idUtente', 'index' => 'u.idUtente', 'width' => 200,
+                    'align' => 'left', 'sortable' => true, 'search' => true,
+                ), 
+                array(
+                    'name' => 'idPrestazione', 'index' => 'u.idPrestazione', 'width' => 200,
+                    'align' => 'left', 'sortable' => true, 'search' => true,
+                ),
+                array(
+                    'name' => 'oreOfferte', 'index' => 'oreOfferte', 'width' => 200, 'aggregated' => FALSE,
+                    'align' => 'left', 'sortable' => true, 'search' => true,// 'formatter' => 'currency',
+                ),
+                array(
+                    'name' => 'descrizionePrestazione', 'index' => 'u.descrizionePrestazione', 'width' => 255,
+                    'align' => 'left', 'sortable' => true, 'search' => true,
+                    'formatter' => 'textarea',  'search' => true, // 'stype' => 'select', 
+                    //'searchoptions' => array(
+                    //    'value' => array(
+                    //        1 => 'enable',
+                    //        0 => 'disabled',
+                    //    )
+                    //)
+                ),
+            ))
+            ->setQueryBuilder($this->getQueryBuilder())
+            ->enableSearchButton(true)
+        ;
+
+        return $dataGrid;
+    }
+
+
+    protected function getQueryBuilder()
+    {
+        $qb = $this->em->getRepository('idlGestbdtBundle:Offerte')->createQueryBuilder('u');
+        $qb->select('u.id, u.idUtente, u.idPrestazione, u.oreOfferte, u.descrizionePrestazione, u');
+        return $qb;
+    }
+}

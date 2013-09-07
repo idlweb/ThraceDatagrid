@@ -1,0 +1,24 @@
+parameters:
+    ib_user.oauth_user_provider.class: idl\GestbdtBundle\Model\OAuthUserProvider
+
+services:
+     ib_user.oauth_user_provider:
+         class:  %ib_user.oauth_user_provider.class%
+#    idl_gestbdt.example:
+#        class: %idl_gestbdt.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+     app.datagrid.builder.volontario_management:
+         class:  idl\GestbdtBundle\DataGrid\VolontarioManagementBuilder
+         arguments:  [thrace_data_grid.factory.datagrid]  
+         arguments:  [translator]   
+         arguments:  [router]
+         arguments:  [doctrine.orm.entity_manager]
+  
+
+     app.datagrid.volontario_management:
+         class:  Thrace\DataGridBundle\DataGrid\DataGrid
+         factory-service:  app.datagrid.builder.volontario_management
+         factory-method:  build
+         tags:
+             - {name: thrace_data_grid.datagrid, alias: volontario_management}
+         
